@@ -1,7 +1,7 @@
 ![javascript权威指南](https://gss1.bdstatic.com/-vo3dSag_xI4khGkpoWK1HF6hhy/baike/c0%3Dbaike92%2C5%2C5%2C92%2C30/sign=4f3d8652de3f8794c7f2407cb3726591/3c6d55fbb2fb4316b05a1f902aa4462308f7d397.jpg)
 # Javascript权威指南(第6版)
 ### 第一部分 javascript 语言核心  
-* [第2章--语法结构](/tree/master/javascript语言核心/第2章语法结构)
+* [第2章--语法结构](https://github.com/fanpengfei510/js-The-Definitive-Guide/tree/master/javascript%E8%AF%AD%E8%A8%80%E6%A0%B8%E5%BF%83/%E7%AC%AC2%E7%AB%A0%E8%AF%AD%E6%B3%95%E7%BB%93%E6%9E%84)
   + 2.1 字符集
   + 2.2 注释
   + 2.3 直接量

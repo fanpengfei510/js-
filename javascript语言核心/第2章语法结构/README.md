@@ -77,34 +77,34 @@ $str
 #### 保留字
 javascript把一些标识符拿出来用作子集的关键字。因此，就不能在程序中把这些关键字用作标识符。
 
-保留字 | 保留字 | 保留字 | 保留字 | 保留字 
-- | - | - | - | -  
-break | delte | function | return | typeof 
-case | do | if | switch | var
-catch | else | in | this | void
-continue | false | instanceof | throw | while
-debugger | finally | new | true | with
-default | for | null | try | class
-const | enum | export | extends | import
-super |
+| 保留字 | 保留字 | 保留字 | 保留字 | 保留字 |
+| --- | ------ | ----- | ----- | ----- |
+| break | delte | function | return | typeof |
+| case | do | if | switch | var |
+| catch | else | in | this | void |
+| continue | false | instanceof | throw | while |
+| debugger | finally | new | true | with |
+| default | for | null | try | class |
+| const | enum | export | extends | import |
+| super |
 ---
 
 下面的保留字在普通javascript里是合法的，在严格模式下是保留字：
-保留字 | 保留字 | 保留字 | 保留字 | 保留字 
-- | - | - | - | -  
-implements | let | private | public | yield 
-interface | package | protected | static
+| 保留字 | 保留字 | 保留字 | 保留字 | 保留字 |
+| --- | ------ | ----- | ----- | ----- |
+| implements | let | private | public | yield |
+| interface | package | protected | static |
 ---
 
 javascript预定义了很多全局变量和函数，应当避免把他们的名字用作变量名和函数名：
-保留字 | 保留字 | 保留字 | 保留字 | 保留字 
-- | - | - | - | -  
-arguments | encodeURI | Infinity | Number | RegExp 
-Array | encodeURIComponent | isFinite | Object  | String
-Boolaen | Error | isNaN | parseFloat  | SyntaxError
-Date | eval | JSON | parseInt  | TypeError
-decodeURI | EvalError | Math | RangeError  | undefined
-decodeURIComponent | Function | NaN | ReferenceError  | URIError
+| 保留字 | 保留字 | 保留字 | 保留字 | 保留字 |
+| --- | ------ | ----- | ----- | ----- |
+| arguments | encodeURI | Infinity | Number | RegExp |
+| Array | encodeURIComponent | isFinite | Object  | String |
+| Boolaen | Error | isNaN | parseFloat  | SyntaxError |
+| Date | eval | JSON | parseInt  | TypeError |
+| decodeURI | EvalError | Math | RangeError  | undefined |
+| decodeURIComponent | Function | NaN | ReferenceError  | URIError |
 
 ### 2.5 可选的分号
 和其他许多编程语言一样，javascript使用分号(;)将语句分隔开。

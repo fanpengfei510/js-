@@ -1,7 +1,7 @@
 ![javascript权威指南](https://gss1.bdstatic.com/-vo3dSag_xI4khGkpoWK1HF6hhy/baike/c0%3Dbaike92%2C5%2C5%2C92%2C30/sign=4f3d8652de3f8794c7f2407cb3726591/3c6d55fbb2fb4316b05a1f902aa4462308f7d397.jpg)
 # Javascript权威指南(第6版)
 ### 第一部分 javascript 语言核心  
-* [第2章--语法结构](#)
+* [第2章--语法结构](/tree/master/javascript语言核心/第2章语法结构)
   + 2.1 字符集
   + 2.2 注释
   + 2.3 直接量

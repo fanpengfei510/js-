@@ -7,7 +7,7 @@
   + 2.3 直接量
   + 2.4 标识符和保留字
   + 2.5 可选的分号
-* [第3章--类型、值和变量](#)
+* [第3章--类型、值和变量](https://github.com/fanpengfei510/js-The-Definitive-Guide/tree/master/javascript%E8%AF%AD%E8%A8%80%E6%A0%B8%E5%BF%83/%E7%AC%AC3%E7%AB%A0%E7%B1%BB%E5%9E%8B%E4%B8%8E%E5%80%BC%E5%92%8C%E5%8F%98%E9%87%8F)
   + 3.1 数字
   + 3.2 文本
   + 3.3 布尔值

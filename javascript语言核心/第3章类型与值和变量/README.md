@@ -72,9 +72,9 @@ zero === negz;  // true：正零值和负零值相等
 | \v | 垂直制表符(\u000B) |
 | \f | 换页符(\u000C) |
 | \r | 回车符(\u000D) |
-| \" | 双引号(\u0022) |
-| \' | 撇号或单引号(\u0027) |
-| \\ | 反斜线(\u005C) |
+| \\" | 双引号(\u0022) |
+| \\' | 撇号或单引号(\u0027) |
+| \\\ | 反斜线(\u005C) |
 | \xXX | 由两位十六进制数XX制定的Latin-1字符 |
 | \uXXXX | 由4位十六进制数XXXX制定的Unicode |  
 
@@ -166,4 +166,21 @@ undefined定义：
 * 全局属性：undefined、Infinity、NaN
 * 全局函数：isNan()、parseInt()、eval()
 * 构造函数：Date()、RegExp()、String()、Object()、Array()
-* 全局对象：Math()、JSON
+* 全局对象：Math()、JSON  
+
+全局对象的初始属性并不是保留字，但他们应该当做保留字来对待。
+
+> 在代码的最顶级，不在任何函数内的js代码，可以使用js关键字this来引用全局对象。  
+> 在客户端js中，在其表示的浏览器窗口中的所有js代码中，Window对象充当了全局对象。这个全局Window对象有一个属性window引用其自身，它可以代替this引用全局对象。Window对象定义了核心全局属性，但它也针对web浏览器和客户端js定义了一少部分其他全局属性  
+> 当初次创建的时候，全局对象定义了js中所有的预定义全局值。这个特殊对象同样包含了为程序定义的全局值。如果代码声明了一个全局变量，这个全局变量就是全局对象的一个属性。
+``` javascript
+var global = this;  //定义一个引用全局对象的局部变量
+```
+
+### 3.6 包装对象
+> js对象是一种复合值：他是属性或已命名值的集合。通过`"."`符号来引用属性值。当属性值是一个函数的时候，称其为方法。通过fn.method()来调用对象fn中的方法。
+``` javascript
+var str = 'hello world';
+var value = str.substring(str.indexOf(" ") + 1,str.length);
+console.log(value); // world
+```

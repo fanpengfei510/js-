@@ -178,9 +178,244 @@ var global = this;  //定义一个引用全局对象的局部变量
 ```
 
 ### 3.6 包装对象
-> js对象是一种复合值：他是属性或已命名值的集合。通过`"."`符号来引用属性值。当属性值是一个函数的时候，称其为方法。通过fn.method()来调用对象fn中的方法。
+> * 存取字符串、数字或布尔值的属性时创建的临时对象称作包装对象，他只是偶尔用来区分字符串值和字符串对象、数字和数值对象以及布尔值和布尔对象。  
+> * 由于字符串、数字、布尔值的属性都是只读的，并且不能给他们定义新属性，因此你需要明白他们是用于对象的。  
+> * js对象是一种复合值：他是属性或已命名值的集合。通过`"."`符号来引用属性值。当属性值是一个函数的时候，称其为方法。通过fn.method()来调用对象fn中的方法。
 ``` javascript
 var str = 'hello world';
 var value = str.substring(str.indexOf(" ") + 1,str.length);
 console.log(value); // world
+
+var s = 'test', n = 1, b = true;    // 一个字符串、数字、布尔值
+var S = new String(s);              // 一个字符串包装对象
+var N = new Number(n);              // 一个数字包装对象
+var B = new Boolean(b);             // 一个布尔值包装对象
+```
+
+### 3.7 不可变的原始值和可变的对象引用
+> js中的原始值(nudefined、null、布尔值、数字和字符串)与对象(包括数组和函数)有着根本区别。  
+> 原始值是不可更改的：任何方法都无法更改(或“突变”一个原始值)。对数字和布尔值来说显然如此----改变数字的值本身就说不通，而对字符串来说就不那么明显了，因为字符串看起来像由字符组成的数组，我们期望可以通过制定索引来修改字符串中的字符。  
+> 实际上，js是禁止这样做的。字符串中所有的方法看上去返回了一个修改后的字符串，实际上返回的是一个新字符串
+``` javascript
+var s = 'hello';      // 定义一个由小写组成的字符串
+s.toUpperCase();      // 返回"HELLO"，但并没有改变s的值
+console.log(s);       // 'hello'：原始字符串的值并未改变
+```
+
+对象和原始值不同，首先，对象是可变的----他们的值是可修改的：
+``` javascript
+var obj = { x:1};       // 定义一个对象
+obj.x = 2;              // 通过修改对象属性值来更改对象
+obj.y = 3;              // 再次更改这个对象，给他添加一个新属性
+
+var arr = [1,2,3];      // 数组也是可修改的
+arr[0] = 0;             // 更改数组的一个元素
+arr[3] = 4;             // 给数组添加一个新元素
+```
+
+对象的比较并非值的比较：即使两个对象包含同样的属性及相同的值，他们也是不相等的。各个索引元素完全相等的两个数组也不相等。
+``` javascript
+var obj1 = { x:1 }, obj2 = { x:1 };
+obj1 == obj2;         // false：两个独立的对象永不相等
+obj1 === obj2;        // false
+
+var arr1 = [], arr2 = [];
+arr1 == arr2;         // false：两个独立的数组永不相等
+arr1 === arr2;        // false
+```
+
+对象的值都是引用，对象的比较均是引用的比较：当他们引用同一个对象时，他们才相等。
+``` javascript
+var a = [];       // 定义一个引用空数组的变量a
+var b = a;        // 变量b引用同一个数组
+b[0] = 1;         // 通过变量b来修改引用的数组
+a[0];             // => 1：变量a也会修改
+a === b;          // true：a和b引用同一个数组，因此他们相等
+
+// 得到一个对象或者数组的副本，则必须复制对象的每个属性和数组的元素
+var arr = ['a','b','c'];
+var arr1 = [];
+for(var i=0, len = arr.length; i < len; i++){
+  arr1[i] = arr[i]
+}
+
+// 如果我们想比较两个单独的对象或者数组，则必须比较他们的属性或元素
+function equalArrays(a,b){
+  if(a.length != b.length) true false;        // 两个长度不同的数组不相等
+  for(var i=0, len = a.length; i<len; i++)    // 循环便利所有元素
+    if(a[i] !== b[i]) return false;           // 如果有任意元素不等，则数组不相等
+  return true;                                // 否则他们相等
+}
+```
+
+### 3.8 类型转换
+javascript类型转换表
+> 转换为数字的清醒比较微妙。那些以数字表示的字符串可以直接转换Wie数组，也允许在开始和结尾处带有空格。
+> 但在开始和结尾处的任意非空格字符都不会被当成数字直接量的一部分，进而造成字符串转换为数字的结果为`NaN`。  
+> true转换为1，flase、空字符串转换为0。
+
+| 值 | 转换为字符串 | 数字 | 布尔值 | 对象 |
+| -- | ----------- | --- | ------ | ---- |
+| undefined | 'undefind' | NaN | false | thros TypeError |
+| null | 'null' | 0 | false | thros TypeError |
+| true | 'true' | 1 |   | new Boolean(true) |
+| false | 'false' | 0 |   | new Boolean(false) |
+| "" (空字符串) |  | 0 | false | new String("") |
+| "1.2" (非空，数字) |  | 1.2 | true | new String("1.2") |
+| "one" (非空，非数字) |  | NaN | true | new String("one") |
+| 0 | '0' |   | false | new Number(0) |
+| -0 | '0' |   | false | new Number(-0) |
+| NaN | 'Nan' |   | false | new Number(NaN) |
+| Infinity | 'Infinity' |   | true | new Number(Infinity) |
+| -Infinity | '-Infinity' |   | true | new Number(-Infinity) |
+| 1 (无穷大，非零) | '1' |   | true | new Number(1) |
+| {} (任意对象) | 3.8.3章节 | 3.8.3章节 | true |  |
+| [] (任意数组) | "" | 0 | true |  |
+| [9] (1个数字元素) | "9" | 9 | true |  |
+| ['a'] (其他数组) | 使用join()方法 | Nan | true |  |
+| function(){} (任意函数) | 3.8.3章节 | Nan | true |  |
+
+
+#### 3.8.1 转换为相等性
+> 需要特别注意的是，一个值转换为另一个值并不意味这两个值相等。  
+``` javascript
+// == 相等运算符相等的含义，以下结果都为true
+null == undefined;      // 认为相等
+"0" == 0;               // 在比较前字符串转为数字
+0 == false;             // 在比较前布尔值转换为数字
+"0" == false;           // 在比较浅字符串和布尔值都转换为数字
+```
+
+#### 3.8.2 显式类型转换
+> 尽管js可以自动做许多类型转换，但有时仍需要做显式类型转换，或者为了使代码变得清晰易读而做显式转换。  
+
+**除了`null`和`undefined`之外的任何值都具有toString()方法，这个方法执行结果通常和String()方法的返回结果一致。**  
+``` javascript
+// 最简单的方法：Boolean()、Number()、String()、Object()函数
+Number("3");       // 3
+String(false);     // "false" 或使用 false.toString()
+Boolean([]);       // true
+Object(3);         // new Number(3)
+
+// 一元运算符 “+”操作数转换为数字。“!”操作数转换布尔值取反。
+x + "";     // 等价于String(x)
++x;         // 等价于 Number(x)，可以写成 x - 0;
+!!x;        // 等价于Boolean(x)，双叹号
+
+/*
+  指数计数法，Number类为这些数字到字符串的类型转换定义了三个方法：
+  toFixed()：根据小数点后的制定位数将数字转换为字符串，它从不使用指数计数法
+  toExponential()：使用指数计数法将数字转换为指数形式的字符串，其中小数点前只有一位，小数点后的位数则由参数制定
+  toPrecision()：根据制定的有效数字位数将数字转换为字符串，如果有效数字的位数少于数字整数部分的位置，则转换成指数形式。
+*/
+var num = 123456.789;
+num.toFixed(0);         // "123457"
+num.toFixed(2);         // "123456.79"
+num.toFixed(5);         // "123456.78900"
+num.toExponential(1);   // 1.2e+5
+num.toExponential(3);   // 1.235e+5
+num.toPrecision(4);     // 1.235e+5
+num.toPrecision(7);     // 123456.8
+num.toPrecision(10);    // 123456.7890
+
+/*
+parseInt()和parseFloat()函数，他们是全局函数，不从属与任何类的方法。
+parseInt()：只解析整数
+parseFloat()：可以解析整数和浮点数
+*/
+parseInt("3 bind mice");      // 3
+parseFloat(" 3.14 meters");   // 3.14
+parseInt("-12.34");           // -12
+parseInt("0xFF");             // 255
+parseInt("-0XFF");            // -255
+parseFloat(".1");             // 0.1
+parseInt("0.1");              // 0
+parseInt(".1");               // NaN：整数不能以"."开始
+parseFloat("$72.47");         // NaN：整数不能以"$"开始
+
+// parseInt()可以接收第二个可选参数，这个参数制定数字转换的基数合法的范围是2~36
+parseInt("11",2);       // 3 (1*2+1)
+parseInt("ff",16);      // 255 (15*16+15)
+parseInt("zz",36);      // 1295 (35*36+35)
+parseInt("077",8);      // 63 (7*8+7)
+parseInt("077",10)      // 77 (7*10+7)
+```
+
+#### 3.8.3 对象转换为原始值
+> 所有的对象集成了两个转换方法  
+> toString()：它的作用是返回一个反映这个对象的字符串。  
+> valueOf()：如果存在任意原始值，他就默认将对象转换为表示它的原始值。对象是复合值，而且大多数对象无法真正表示一个原始值，因此默认的valueOf()方法简单的返回对象本身，而不是返回一个原始值。
+``` javascript
+// toString()
+[1,2,3].toString();                // 1,2,3
+(function(x){f(x);}).toString();   // function(x){\n f(x);\n}
+/\d+\/g.toString();                // /\\d+/g
+new Date(2010,0,1).toString();     // Fri Jan 01 2010 00:00:00 GMT+0000 (UTC)
+
+// valueOf()
+var d = new Date(2010,0,);        // 2010-01-01T00:00:00.000Z
+d.valueOf();                      // 1262304000000
+
+// 日期对象和“+”、“-”，“==”、“>”的运行结果
+var date = new Date();          // 创建一个日期对象
+typeof (date + 1);              // "string"：“+”将日期转换为字符串
+typeof (data - 1);              // "number"：“-”使用对象数字的转换
+date == date.toString();        // true：隐式的和显式的字符转换
+date > (date - 1);              // true：“>”将日期转换为数字
+```
+
+### 3.9 变量声明
+> js程序中，使用一个变量之前应当先声明，变量是使用关键字`var`来声明的。  
+``` javascript
+var i;
+var sum;
+
+// 可以同时声明多个变量
+var i,sum;
+
+// 将变量的初始复制和变量声明写在一起
+var message = "hello";
+var i = 0; j = 0; k = 0;
+```
+**重要的声明和遗漏的声明**
+> 如果你师徒读取一个没有声明的变量的值，js会报错。  
+> 在非严格模式下，如果给一个为生命的变量赋值，js实际上会给全局对象穿件一个同名属性，并且它工作起来像一个真正声明的全局变量。这意味着你可以侥幸不声明变量，但这是一个不好的习惯会造成很多bug，因此，你应该当使用使用var来声明变量。  
+
+### 3.10 变量作用域
+> 一个变量的作用域(scope)是程序源码中定义这个变量的区域。  
+> 全局变量拥有全局作用域，在js代码中的任何地方都是由定义的。  
+> 然而在函数内声明的变量只在函数体内由定义，他们是局部变量，作用域是局部性的。  
+> 函数参数也是局部变量，他们只在函数体内由定义。
+
+``` javascript
+// 在函数体内，局部变量优先级高于全局变量，如果重名，全局变量会被局部变量覆盖
+var scope = "global";       // 全局变量
+function checkScope(){
+  var scope = "local";      // 局部变量
+  return scope;
+}
+checkScope();               // local
+
+// 全局作用域编写代码是可以不谢var语句，但局部变量必须使用var语句
+scope = "global";         // 全局变量
+function checkScope(){
+  scope = "local";        // 修改了全局重名的变量
+  myScope = "local";      // 显式的声明了一个全局变量
+  return [scope,myScope]
+}
+checkScope();             // ["local","local"]：产生了副作用
+scope;                    // local：全局变量被局部变量给修改了
+myScope;                  // local：全局命名空间搞乱了
+
+// 函数定义是可以嵌套的。会出现几个布局作用域嵌套的情况
+var scope = "global scope";     // 全局变量
+function checkScope(){
+  var scope = "local scope";    // 局部变量
+  function nested(){
+    var scope = "nested scope"; // 嵌套作用域内的局部变量
+    return scope;
+  }
+  return nested();
+}
+checkScope();                   // nested scope
 ```

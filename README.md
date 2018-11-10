@@ -33,7 +33,7 @@
   + 4.12 表达式计算
   + 4.13 其他运算符
 * [第5章-语法](#)
-* [第6章-对象](#)
+* [第6章-对象](https://github.com/fanpengfei510/js-The-Definitive-Guide/tree/master/javascript%E8%AF%AD%E8%A8%80%E6%A0%B8%E5%BF%83/%E7%AC%AC%E5%85%AD%E7%AB%A0%E5%AF%B9%E8%B1%A1)
 * [第7章-数组](#)
 * [第8章-函数](#)
 * [第9章-类与模块](#)
